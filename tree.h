@@ -37,14 +37,14 @@ public:
 	BinarySearchTree(): root(nullptr){};
 	BinarySearchTree(T _root): root(new Element<T>(_root)){};
 	Element <T>* get_root() const {return root; };
-	void addElement(T _data);
-	Element<T>* searchElement(T _data);
+	void addElement(T _data) throw(AddingElementException);
+	Element<T>* searchElement(T _data) const;
 	void deleteElementChilds(T _data);
-	void out(Element <T>* element, ostream & stream);
+	void out(Element <T>* element, ostream & stream, int level) const;
 	~BinarySearchTree();
 
-	friend fstream & operator >> <>(fstream & stream, BinarySearchTree<T> & tree);
-	friend ostream & operator << <>(ostream & stream, const BinarySearchTree<T> & tree);
+	friend fstream & operator >> <>(fstream & stream, BinarySearchTree<T> & tree) throw(AddingElementException);
+	friend ostream & operator << <>(ostream & stream, const BinarySearchTree<T> & tree) throw(EmptyTree);
 private:
 	Element<T>* root;
 };
@@ -69,15 +69,18 @@ void BinarySearchTree<T>:: addElement(T _data){
 }
 
 template<class T>
-void BinarySearchTree<T> :: out(Element <T>* element, ostream & stream){
+void BinarySearchTree<T> :: out(Element <T>* element, ostream & stream, int level) const{
 	if (element == nullptr) return;
-	out(element->left, stream);
-	stream << element->data << " ";
-	out(element->right, stream);
+	out(element->left, stream, level + 1);
+    for(int i = 0; i< level; i++){ 
+		cout << "   ";
+	}
+	stream << element->data << endl;
+    out(element->right,stream, level + 1);
 }
 
 template <class T>
-Element<T>* BinarySearchTree<T> :: searchElement(T _data){
+Element<T>* BinarySearchTree<T> :: searchElement(T _data) const{
 	Element<T> *iterator = root;
 	while (iterator != nullptr){
 		if (iterator->data == _data) return iterator;
@@ -97,7 +100,7 @@ void BinarySearchTree<T>::deleteElementChilds(T _data){
 }
 
 template<typename T>
-fstream & operator >>(fstream & stream, BinarySearchTree<T> & tree){
+fstream & operator >>(fstream & stream, BinarySearchTree<T> & tree) throw(AddingElementException) {
 	T temp;
 	while(!stream.eof()){
 		if (stream >> temp) tree.addElement(temp);
@@ -110,8 +113,9 @@ fstream & operator >>(fstream & stream, BinarySearchTree<T> & tree){
 }
 
 template <typename T>
-ostream & operator << (ostream & stream, BinarySearchTree<T> & tree){
-	tree.out(tree.get_root(), stream);
+ostream & operator << (ostream & stream, BinarySearchTree<T> & tree) throw(EmptyTree){
+	if(tree.get_root() == nullptr) throw EmptyTree();
+	tree.out(tree.get_root(), stream, 1);
 	return stream;
 }
 
