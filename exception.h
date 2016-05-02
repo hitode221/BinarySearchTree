@@ -4,8 +4,8 @@ using namespace std;
 
 class TreeException : public std::exception{
 public:
-	TreeException() : std::exception("Unknown exception"){};
-	TreeException(const char *_message) : exception(_message){};
+	TreeException() : std::exception(invalid_argument("Unknown exception")){};
+	TreeException(const char *_message) : exception(invalid_argument(_message)){};
 };
 
 class EmptyTree : public TreeException{
