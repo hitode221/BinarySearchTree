@@ -43,7 +43,7 @@ public:
 	void out(Element <T>* element, ostream & stream, int level) const;
 	~BinarySearchTree();
 
-	friend fstream & operator >> <>(fstream & stream, BinarySearchTree<T> & tree) throw(AddingElementException);
+	friend fstream & operator >> <>(fstream & stream, BinarySearchTree<T> & tree);
 	friend ostream & operator << <>(ostream & stream, const BinarySearchTree<T> & tree) throw(EmptyTree);
 private:
 	Element<T>* root;
@@ -100,7 +100,7 @@ void BinarySearchTree<T>::deleteElementChilds(T _data){
 }
 
 template<typename T>
-fstream & operator >>(fstream & stream, BinarySearchTree<T> & tree) throw(AddingElementException) {
+fstream & operator >>(fstream & stream, BinarySearchTree<T> & tree){
 	T temp;
 	while(!stream.eof()){
 		if (stream >> temp) tree.addElement(temp);
