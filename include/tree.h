@@ -50,7 +50,7 @@ private:
 };
 
 template<class T>
-void BinarySearchTree<T>:: addElement(T _data){
+void BinarySearchTree<T>:: addElement(T _data) throw(AddingElementException) {
 	Element<T> *new_element = new Element<T>(_data);
 	if (root == nullptr) {
 		root = new_element;
