@@ -11,9 +11,15 @@ SCENARIO("Tree init", "[init]") {
 }
 
 SCENARIO("Adding element", "[add]"){
-  BinarySearhTree <int> tree(5);
+  BinarySearchTree <int> tree(5);
   tree.addElement(6);
   tree.addElement(3);
   REQUIRE(tree.get_root()->left == 3);
   REQUIRE(tree.get_root()->right == 6);
+}
+
+SCENARIO("fstream", "[fstream]"){
+  fstream file("1.txt");
+  BinarySearchTree <int> tree(5);
+  file >> tree;
 }
