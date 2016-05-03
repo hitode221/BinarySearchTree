@@ -3,7 +3,7 @@
 #include <catch.hpp>
 #include <fstream>
 
-SCENARIO("Tree: init, getCount(), getNumber()", "[init, getCount(), getNumber()]") {
+SCENARIO("Tree init", "[init]") {
   BinarySearchTree <int> tree(5);
   BinarySearchTree <int> empty_tree;
   REQUIRE(tree.get_root()->data == 5);
