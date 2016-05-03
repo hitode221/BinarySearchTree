@@ -42,5 +42,5 @@ SCENARIO("Search element", "[search]"){
   tree.addElement(6);
   tree.addElement(3);
   REQUIRE(tree.searchElement(6)->data == 6);
-  REQUIRE(tree.searchElement(221) == nullptr;)
+  REQUIRE(tree.searchElement(221) == nullptr);
 }
