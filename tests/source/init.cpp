@@ -30,6 +30,8 @@ SCENARIO("fstream", "[fstream]"){
   fstream file("1.txt");
   BinarySearchTree <int> tree(5);
   file >> tree;
+   REQUIRE(tree.get_root()->left->data == 4);
+  REQUIRE(tree.get_root()->right->data == 6);
 }
 
 SCENARIO("Search element", "[search]"){
