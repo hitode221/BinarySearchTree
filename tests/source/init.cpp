@@ -27,11 +27,14 @@ SCENARIO("Adding element", "[add]"){
 }
 
 SCENARIO("fstream", "[fstream]"){
-  fstream file("1.txt");
+  fstream filein("1.txt");
+  fstream fileout("out.txt");
   BinarySearchTree <int> tree(5);
   file >> tree;
-   REQUIRE(tree.get_root()->left->data == 4);
+  REQUIRE(tree.get_root()->left->data == 4);
   REQUIRE(tree.get_root()->right->data == 6);
+  fileout << tree;
+  
 }
 
 SCENARIO("Search element", "[search]"){
