@@ -12,14 +12,30 @@ SCENARIO("Tree init", "[init]") {
 
 SCENARIO("Adding element", "[add]"){
   BinarySearchTree <int> tree(5);
+  bool flag = false;
   tree.addElement(6);
   tree.addElement(3);
   REQUIRE(tree.get_root()->left->data == 3);
   REQUIRE(tree.get_root()->right->data == 6);
+  try{
+    tree.addElement(6);
+  }
+  catch(std::exception &e){
+    flag = true;
+  }
+  REQUIRE(flag);
 }
 
 SCENARIO("fstream", "[fstream]"){
   fstream file("1.txt");
   BinarySearchTree <int> tree(5);
   file >> tree;
+}
+
+SCENARIO("Search element", "[search]"){
+  BinarySearchTree <int> tree(5);
+  tree.addElement(6);
+  tree.addElement(3);
+  REQUIRE(tree.searchElement(6)->data == 6);
+  REQUIRE(tree.searchElement(221) == nullptr;)
 }
