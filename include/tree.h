@@ -121,5 +121,5 @@ ostream & operator << (ostream & stream, BinarySearchTree<T> & tree) throw(Empty
 
 template <typename T>
 BinarySearchTree<T> :: ~BinarySearchTree(){
-	deleteElementChilds(root->data);
+	if(root!= nullptr) deleteElementChilds(root->data);
 }
