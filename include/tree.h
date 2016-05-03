@@ -105,7 +105,6 @@ fstream & operator >>(fstream & stream, BinarySearchTree<T> & tree){
 	while(!stream.eof()){
 		if (stream >> temp) tree.addElement(temp);
 		else{ 
-			throw AddingElementException();
 			return stream; 
 		}
 	}
