@@ -14,8 +14,8 @@ SCENARIO("Adding element", "[add]"){
   BinarySearchTree <int> tree(5);
   tree.addElement(6);
   tree.addElement(3);
-  REQUIRE(tree.get_root()->left == 3);
-  REQUIRE(tree.get_root()->right == 6);
+  REQUIRE(tree.get_root()->left->data == 3);
+  REQUIRE(tree.get_root()->right->data == 6);
 }
 
 SCENARIO("fstream", "[fstream]"){
