@@ -20,7 +20,7 @@ SCENARIO("Adding element", "[add]"){
   try{
     tree.addElement(6);
   }
-  catch(std::exception &e){
+  catch(AddingElementException &e){
     flag = true;
   }
   REQUIRE(flag);
@@ -29,13 +29,22 @@ SCENARIO("Adding element", "[add]"){
 SCENARIO("fstream", "[fstream]"){
   fstream filein("1.txt");
   fstream fileout("out.txt");
+  bool flag = false;
   BinarySearchTree <int> tree(5);
+  BinarySearchTree <int> empty_tree;
   filein >> tree;
   REQUIRE(tree.get_root()->left->data == 4);
   REQUIRE(tree.get_root()->right->data == 6);
   fileout << tree;
-  
+  try{
+   fileout << empty_tree;
+  }
+  catch(EmptyTree &e){
+    flag = true;
+  }
+  REQUIRE(flag);
 }
+
 
 SCENARIO("Search element", "[search]"){
   BinarySearchTree <int> tree(5);
@@ -43,4 +52,20 @@ SCENARIO("Search element", "[search]"){
   tree.addElement(3);
   REQUIRE(tree.searchElement(6)->data == 6);
   REQUIRE(tree.searchElement(221) == nullptr);
+}
+
+SCENARIO("Delete element", "[delete]"){
+  fstream filein("1.txt");
+  BinarySearchTree <int> tree(5);
+  bool flag = false;
+  filein >> tree;
+  tree.deleteElement(6);
+  REQUIRE(tree.get_root()->right->data == 7);
+  try{
+    tree.deleteElement(221);
+  }
+  catch(NoSuchElement &e){
+    flag = true;
+  }
+  REQUIRE(flag);
 }
