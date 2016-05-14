@@ -39,7 +39,9 @@ public:
 	Element <T>* get_root() const {return root; };
 	void addElement(T _data) throw(AddingElementException);
 	Element<T>* searchElement(T _data) const;
+	Element<T>* searchParent(T _data) const;
 	void deleteElementChilds(T _data);
+	void deleteElement(T _data);
 	void out(Element <T>* element, ostream & stream, int level) const;
 	~BinarySearchTree();
 
@@ -90,6 +92,20 @@ Element<T>* BinarySearchTree<T> :: searchElement(T _data) const{
 	return nullptr;
 }
 
+template <class T>
+Element<T>* BinarySearchTree<T> :: searchParent(T _data) const{
+	if(root->data == _data) return nullptr;
+	Element<T> *iterator = root;
+	Element<T> *iterator_parent = root;
+	while (iterator != nullptr){
+		if (iterator->data == _data) return iterator_parent;
+		iterator_parent = iterator;
+		if (iterator->data > _data) iterator = iterator->left;
+		else iterator = iterator->right;
+	}
+	return nullptr;
+}
+
 template<typename T>
 void BinarySearchTree<T>::deleteElementChilds(T _data){
 	Element<T> *element = searchElement(_data);
@@ -97,6 +113,40 @@ void BinarySearchTree<T>::deleteElementChilds(T _data){
 	if(element->right !=nullptr) deleteElementChilds(element->right->data);
 	element->left = element->right = nullptr;
 	
+}
+
+template <typename T>
+void BinarySearchTree<T>::deleteElement(T _data){
+	Element<T> *element = searchElement(_data);
+	if (element == nullptr) throw NoSuchElement();
+	Element<T> *element_parent = searchParent(_data);
+	if (element->right == nullptr){
+		if (element->left == nullptr) {
+			if(_data > element_parent->data)
+				element_parent->right = nullptr;
+			else element_parent->left = nullptr;
+			return;
+		}
+		if(_data > element_parent->data)
+			element_parent->right = element->left;
+		else element_parent->left = element->left;
+		return;
+	}
+	Element<T> *iterator_parent = element;
+	Element<T> *iterator = element->right;
+	if(iterator->left == nullptr){
+		if(_data > element_parent->data)
+			element_parent->right = iterator;
+		else element_parent->left = iterator;
+		iterator->left = element->left;
+		return;
+	}
+	while (iterator->left != nullptr){
+		iterator_parent = iterator;
+		iterator = iterator->left;
+	}
+	element->data = iterator->data;
+	iterator_parent->left = iterator->right; 
 }
 
 template<typename T>
