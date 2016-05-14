@@ -17,3 +17,8 @@ class AddingElementException : public TreeException{
 public:
 	AddingElementException() : TreeException("Cannot adding element"){};
 };
+
+class NoSuchElement : public TreeException{
+public:
+	NoSuchElement() : TreeException("Trere is no such element"){};
+};
