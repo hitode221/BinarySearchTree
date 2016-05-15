@@ -120,6 +120,7 @@ void BinarySearchTree<T>::deleteElement(T _data){
 	if (_data == root->data){
 		deleteElementChilds(root);
 		root = nullptr;
+		return;
 	}
 	Element<T> *element = searchElement(_data);
 	if (element == nullptr) throw NoSuchElement();
