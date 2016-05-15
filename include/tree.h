@@ -118,7 +118,7 @@ void BinarySearchTree<T>::deleteElementChilds(T _data){
 template <typename T>
 void BinarySearchTree<T>::deleteElement(T _data){
 	if (_data == root->data){
-		deleteElementChilds(root);
+		deleteElementChilds(root->data);
 		root = nullptr;
 		return;
 	}
