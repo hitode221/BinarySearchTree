@@ -117,6 +117,10 @@ void BinarySearchTree<T>::deleteElementChilds(T _data){
 
 template <typename T>
 void BinarySearchTree<T>::deleteElement(T _data){
+	if (_data == root->data){
+		deleteElementChilds(root);
+		root = nullptr;
+	}
 	Element<T> *element = searchElement(_data);
 	if (element == nullptr) throw NoSuchElement();
 	Element<T> *element_parent = searchParent(_data);
@@ -171,4 +175,5 @@ ostream & operator << (ostream & stream, BinarySearchTree<T> & tree) throw(Empty
 template <typename T>
 BinarySearchTree<T> :: ~BinarySearchTree(){
 	if(root!= nullptr) deleteElementChilds(root->data);
+	root = nullptr;
 }
